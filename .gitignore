@@ -1,4 +1,4 @@
 .DS_Store
 node_modules/
-scss
-img
+public/vendor
+dist
