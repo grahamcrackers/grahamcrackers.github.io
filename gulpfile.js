@@ -12,6 +12,7 @@ var runSequence = require('run-sequence');
 var autoprefixer = require('gulp-autoprefixer');
 //var sourcemaps = require('gulp-sourcemaps');
 var ghPages = require('gulp-gh-pages');
+var cdnizer = require('gulp-cdnizer');
 
 // Running sass commands
 gulp.task('sass', function(){
@@ -43,6 +44,30 @@ gulp.task('useref', function(){
 		.pipe(gulp.dest('dist'))
 });
 
+// replace local files with cdn's (only for use when pushing to master)
+gulp.task('cdn', function(){
+	gulp.src('./dist/index.html')
+		.pipe(cdnizer([
+				{
+					file: 'vendor/bootstrap/css/bootstrap.css',
+					cdn: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+				},
+				{
+					file: 'vendor/font-awesome/css/font-awesome.css',
+					cdn: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'
+				},
+				{
+					file: 'vendor/jquery/jquery.js',
+					cdn: 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'
+				},
+				{
+					file: 'vendor/bootstrap/js/bootstrap.js',
+					cdn: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
+				}
+			]))
+		.pipe(gulp.dest('./dist'));
+})
+
 gulp.task('images', function(){
 	return gulp.src('public/img/**/*.+(png|jpg|jpeg|gif|svg)')
 		.pipe(cache(imagemin()))
@@ -55,7 +80,7 @@ gulp.task('fonts', function(){
 		.pipe(gulp.dest('dist/fonts'))
 })
 
-
+// tasks to clean up files
 gulp.task('clean:dist', function(){
 	return del.sync('dist');
 })
@@ -94,17 +119,26 @@ gulp.task('watch', ['browserSync', 'sass'], function(){
 	gulp.watch('public/js/**/*.js', browserSync.reload);
 });
 
-// build project for master branch
+
+gulp.task('default', function(callback){
+	runSequence(['vendor','sass','browserSync','watch'], callback)
+})
+
+
+///////////////////////////////////////////
+// build project tasks for master branch //
+///////////////////////////////////////////
 gulp.task('build', function(callback){
-	runSequence('clean:dist', ['sass','useref','images','fonts'], callback)
+	runSequence('clean:dist', 'useref','cdn', ['sass','images','fonts'], callback)
 })
 
 // push project to master branch
 gulp.task('deploy', function(callback){
 	return gulp.src('./dist/**/*')
-		.pipe(ghPages());
+		.pipe(ghPages({
+			'branch': 'master',
+			
+			'push': false
+		}));
 })
 
-gulp.task('default', function(callback){
-	runSequence(['vendor','sass','browserSync','watch'], callback)
-})
