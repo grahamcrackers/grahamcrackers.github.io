@@ -11,6 +11,7 @@ var del = require('del');
 var runSequence = require('run-sequence');
 var autoprefixer = require('gulp-autoprefixer');
 //var sourcemaps = require('gulp-sourcemaps');
+var ghPages = require('gulp-gh-pages');
 
 // Running sass commands
 gulp.task('sass', function(){
@@ -96,6 +97,12 @@ gulp.task('watch', ['browserSync', 'sass'], function(){
 // build project for master branch
 gulp.task('build', function(callback){
 	runSequence('clean:dist', ['sass','useref','images','fonts'], callback)
+})
+
+// push project to master branch
+gulp.task('deploy', function(callback){
+	return gulp.src('./dist/**/*')
+		.pipe(ghPages());
 })
 
 gulp.task('default', function(callback){
