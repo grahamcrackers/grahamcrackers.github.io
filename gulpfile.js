@@ -10,11 +10,14 @@ var cache = require('gulp-cache');
 var del = require('del');
 var runSequence = require('run-sequence');
 var autoprefixer = require('gulp-autoprefixer');
+//var sourcemaps = require('gulp-sourcemaps');
 
 // Running sass commands
 gulp.task('sass', function(){
 	return gulp.src('public/scss/**/*.scss')
+		//.pipe(sourcemaps.init())
 		.pipe(sass())
+		//.pipe(sourcemaps.write('.'))
 		.pipe(autoprefixer())
 		.pipe(gulp.dest('dist/css'))
 		.pipe(browserSync.reload({
@@ -63,6 +66,9 @@ gulp.task('vendor', function(){
 
     gulp.src(['node_modules/jquery/dist/jquery.js', 'node_modules/jquery/dist/jquery.min.js'])
         .pipe(gulpIf('!public/vendor/jquery' ,gulp.dest('public/vendor/jquery')))
+
+    gulp.src(['node_modules/devicon/**/*'])
+        .pipe(gulpIf('!public/vendor/devicon' ,gulp.dest('public/vendor/devicon')))
 
     /*gulp.src(['node_modules/magnific-popup/dist/*'])
         .pipe(gulp.dest('public/vendor/magnific-popup'))

@@ -16,6 +16,10 @@ hr {
   border-width: 1px;
 }
 
+[class^="devicon-"], [class*=" devicon-"] {
+  font-size: 6em;
+}
+
 .navbar-default {
   background-color: #2B2B2B;
   border-color: rgba(222, 27, 27, 0.05);

@@ -3,18 +3,14 @@ $accentSalmon: #DE1B1B;
 $lightBgColor: #F6F6F6; 
 $accentGreen: #E9E581;
 
-
-html,
-body {
+html, body {
   height: 100%;
   width: 100%;
 }
 
 hr {
-  border-color: $accentSalmon;
-  border-width: 3px;
+  border-color: #DE1B1B;
+  border-width: 1px;
 }
 
-.navbar-default {
-	transition: all 0.35s;
-}
+
