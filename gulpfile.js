@@ -135,10 +135,10 @@ gulp.task('build', function(callback){
 // push project to master branch
 gulp.task('deploy', function(callback){
 	return gulp.src('./dist/**/*')
-		.pipe(ghPages({
-			'branch': 'master',
-			
-			'push': false
-		}));
+		.pipe(ghPages({'branch': 'master'}))
+})
+
+gulp.task('publish', function(callback){
+	runSequence('build','deploy', callback)
 })
 
