@@ -37,10 +37,10 @@ gulp.task('browserSync', function(){
 });
 
 gulp.task('useref', function(){
-	return gulp.src('public/*.html')
+	return gulp.src(['public/*.html','public/CNAME'])
 		.pipe(useref())
-		.pipe(gulpIf('*.js', uglify()))
-		.pipe(gulpIf('*.css', cssnano()))
+		//.pipe(gulpIf('*.js', uglify()))
+		//.pipe(gulpIf('*.css', cssnano()))
 		.pipe(gulp.dest('dist'))
 });
 
