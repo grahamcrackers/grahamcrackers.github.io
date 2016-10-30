@@ -117,6 +117,7 @@ gulp.task('watch', ['browserSync', 'sass'], function(){
 	gulp.watch('public/scss/**/*.scss', ['sass']);
 	gulp.watch('public/*.html', browserSync.reload);
 	gulp.watch('public/js/**/*.js', browserSync.reload);
+	gulp.watch('public/css/**/*.css', browserSync.reload);
 });
 
 

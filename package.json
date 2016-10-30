@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "bootstrap-sass": "^3.3.7",
     "browser-sync": "^2.14.3",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
