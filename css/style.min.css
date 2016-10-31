@@ -166,3 +166,7 @@ header .header-content {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+section#contact .form-group textarea {
+  height: 132px;
+}
